@@ -57,10 +57,52 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
 
+
+<script>
+  
+
+// 입력 버튼에 따른 사운드 동작
+function playSound(e){
+  
+      // audio태그의 data-key가 입력 키번호와 일치하는 태그 추출
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"`);
+      // key 클래스 태그의 data-key가 입력 키번호와 일치하는 태그 추출
+      const key = document. querySelector(`.key[data-key="${e.keyCode}"]`);
+      // 해당 버튼의 audio가 없다면 종료
+      if(!audio) return;
+      
+      // 사운드가 동작 중일 경우 소리가 나지 않음
+      // 누를때마다 rewind 해줘야함
+      audio.currentTime = 0; // rewind to the start
+      // 해당 사운드 동작
+      audio.play();
+      // playing 이라는 클래스를 추가함으로 이벤트 동작
+      key.classList.add('playing');
+}
+    
+  // 버튼 Effect 동작 종료 함수
+  function removeTransition(e){
+
+    // propertyName이 transform이 아닌 것은 Pass
+    if(e.propertyName !== `transform`) return;
+    console.log(e.propertyName);
+
+    //this 는 이벤트가 동작한 key 클래스를 보유한 태그
+    this.classList.remove('playing');
+  }
+
+  // 모든 key클래스를 보유한 태그 keys에 보관
+  const keys = Array.from(document.querySelectorAll('.key'));
+  // keys에 보관된 태그가 Event가 변경되면 보관된 key클래스 태그가 removeTrnastion 함수 동작됨
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+    
+
+    //키 입력시 playSound 함수 동작
+    window.addEventListener('keydown', playSound);
 </script>
 
 
 </body>
 </html>
+<!-- key code번호 사이트 : https://keycode.info -->
