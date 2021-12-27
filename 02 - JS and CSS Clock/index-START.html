@@ -56,19 +56,55 @@
       transform: translateY(-3px); /* account for the height of the clock hands */
     }
 
+    /* 바늘의 변경에 따른 움직임 설정 */
     .hand {
       width: 50%;
       height: 6px;
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%; 
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+    /* transform-origin :: CSS transform 속성과 함께 사용되는 속성으로서, 회전 중심(원점·기준점)을 지정 */
+
+    .min-hand{
+      width: 50%;
     }
 
+    .hour-hand{
+      width: 50%;
+    }
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+    function setDate(){
+      // 시간 가져오기
+      const now = new Date();
 
+      // 초침의 현재 각도 구하기
+      const seconds = now.getSeconds();
+      const secondsDegrees = ((seconds / 60) * 360) + 90;
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
+      // 분침의 현재 각도 구하기
+      const minutes = now.getMinutes();
+      const minutesDegrees = ((minutes / 60) * 360) + 90;
+      minHand.style.transform = `rotate(${minutesDegrees}deg)`;
+
+      // 시침의 현재 각도 구하기
+      const hours = now.getHours();
+      const hoursDegrees = ((hours / 12) * 360) + 90;
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+
+    }
+
+    setInterval(setDate, 1000);
   </script>
 </body>
 </html>
