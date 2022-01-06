@@ -18,29 +18,70 @@
     }
 
     // Regular
+    console.log('hello');
 
     // Interpolated
+    console.log(`Hello I am a %s string!`, '★');
 
     // Styled
+    console.log('%cI am some greate text', 
+    'font-size:50px; background:red; text-shadow: 10px 10px 0 blue;');
 
     // warning!
+    console.warn('OH NOOO');
 
     // Error :|
+    console.error('Shit!');
 
     // Info
+    console.info('Crocodiles eat 3-4 people per year');
 
-    // Testing
+    // Testing     true일 경우 출력X / false일 경우 출력
+    const p = document.querySelector('p');
+    console.assert( p.classList.contains('ouch'), 'That is wrong!');
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.log(p);
+    console.dir(p);
+
+    console.clear();
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`); //group start
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`); //group end
+    })
 
     // counting
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Stev');
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Stev');
+    console.count('Stev');
+    console.count('Stev');
+    console.count('Wes');
+    console.count('Wes');
+
 
     // timing
-
+    console.time('fetching data');
+    fetch('https://api.github.com/users/SBKim12')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+        console.log('%c ', `font-size:500px; background:url(${data.avatar_url}) no-repeat center;`);
+      });
+    
+    console.table(dogs);  
   </script>
 </body>
 </html>
