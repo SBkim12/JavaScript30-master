@@ -3,10 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <title>Key Detection</title>
+  <!-- Cornify는 전 세계 1위의 유니콘 및 무지개 서비스 -->
   <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
 </head>
 <body>
 <script>
+// 눌린 키를 보관하는 변수
+const pressed = [];
+// 비밀코드 변수
+const secretCode = 'wesbos';
+
+// 눌린키를 인식
+  window.addEventListener('keyup', (e) =>{
+    console.log(e.key);
+    // 눌린 키를 보관
+    pressed.push(e.key);
+    // 비밀 코드 변수의 최대 길이만큼만을 잘라내기로 유지
+    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);    
+    // 눌린 키들의 조합이 비밀코드와 같은지 비교
+    if(pressed.join('').includes(secretCode)){
+      console.log("Ding Ding!");
+      // 유니콘/무지개 서비스 동작
+      cornify_add();
+    }
+    console.log(pressed);
+  })
 </script>
 </body>
 </html>
