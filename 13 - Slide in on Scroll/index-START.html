@@ -43,6 +43,8 @@
   </div>
 
   <script>
+
+    // 지속적으로 발생한는 이벤트의 동작 간격 설정
     function debounce(func, wait = 20, immediate = true) {
       var timeout;
       return function() {
@@ -58,6 +60,27 @@
       };
     }
 
+    const sliderImages = document.querySelectorAll('.slide-in');
+
+    function checkSlide(e){
+      sliderImages.forEach(sliderImage =>{
+        // half way through the image
+        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+        // bottom of the image
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+        
+        const isHalfshown = slideInAt > sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+        if(isHalfshown && isNotScrolledPast){
+          sliderImage.classList.add('active');
+        }else{
+          sliderImage.classList.remove('active');
+        }
+
+      })
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide));
   </script>
 
   <style>
